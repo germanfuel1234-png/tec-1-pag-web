@@ -5,15 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="E.E.S.T. Nº1 'Manuel Belgrano' - Escuela de Educación Secundaria Técnica en Tres de Febrero, Buenos Aires. Especialidades en Informática, Programación y Maestro Mayor de Obras." />
   <title>E.E.S.T. Nº1 — Escuela de Educación Secundaria Técnica</title>
-  <link rel="preload" as="image" href="bandera-fondo.jpg" fetchpriority="high" />
-  <link rel="preload" as="image" href="hero-fachada.jpg" fetchpriority="high" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="dns-prefetch" href="https://unpkg.com" />
-  <link rel="preload" as="font" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
-  <script defer src="https://unpkg.com/gsap@3.12.5/dist/gsap.min.js"></script>
-  <script defer src="https://unpkg.com/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet" />
   <style>
     /* =============================================
        TOKENS
@@ -23,7 +17,7 @@
       --brand: #0a3970;
       --brand-light: #0c4e8c;
       --accent: #0052CC;
-      --yellow: #d99f0c;
+      --yellow: #eab308;
       --yellow-light: #fef9c3;
 
       --bg: #f1f5f9;
@@ -157,11 +151,9 @@
     .text-pretty { text-wrap: pretty; }
     .section-subtitle {
       text-align: center;
-      max-width: 580px;
+      max-width: 600px;
       margin: 0 auto 2rem;
-      font-size: 1.05rem;
-      color: var(--fg);
-      line-height: 1.55;
+      font-size: 0.95rem;
     }
 
     /* =============================================
@@ -288,36 +280,10 @@
       transition: all 0.2s;
       white-space: nowrap;
     }
-      #headerNav a:hover {
-        background: rgba(255,255,255,0.1);
-        color: #fff;
-      }
-      .nav-dropdown { position: relative; }
-      .nav-dropdown > a { cursor: pointer; }
-      .nav-dropdown-menu {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 50%;
-        transform: translateX(-50%);
-        background: var(--brand);
-        border: 1px solid rgba(255,255,255,0.1);
-        border-radius: 8px;
-        padding: 0.35rem 0;
-        min-width: 180px;
-        list-style: none;
-        box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-        z-index: 100;
-      }
-      .nav-dropdown.open .nav-dropdown-menu { display: block; }
-      .nav-dropdown-menu li { width: 100%; }
-      .nav-dropdown-menu a {
-        display: block;
-        padding: 0.5rem 1rem;
-        white-space: nowrap;
-        text-align: left;
-      }
-      .nav-dropdown-menu a:hover { background: rgba(255,255,255,0.12); }
+    #headerNav a:hover {
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+    }
 
     /* =============================================
        HAMBURGER BUTTON
@@ -401,20 +367,20 @@
       max-width: 720px;
     }
     #hero-content h1 {
-      font-size: clamp(1.4rem, 3vw, 2rem);
-      font-weight: 700;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 800;
       color: #fff;
-      letter-spacing: 0.06em;
-      line-height: 1.15;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
       margin: 0 0 0.75rem;
     }
     #hero-content .hero-sub {
-      font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+      font-size: clamp(1rem, 2vw, 1.25rem);
       color: var(--yellow);
-      font-weight: 700;
-      letter-spacing: 0.12em;
+      font-weight: 600;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
-      margin: 0 0 0.25rem;
+      margin: 0 0 0.5rem;
     }
     #hero-content .hero-desc {
       font-size: clamp(0.95rem, 1.5vw, 1.1rem);
@@ -535,13 +501,10 @@
     /* --- Especialidades grid --- */
     .spec-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 1.5rem;
-      max-width: 800px;
+      max-width: 960px;
       margin: 0 auto;
-    }
-    @media (max-width: 640px) {
-      .spec-grid { grid-template-columns: 1fr; }
     }
     .spec-card {
       padding: 1.75rem;
@@ -685,8 +648,12 @@
     .area-toggle.open { transform: rotate(180deg); }
 
     .area-body {
-      overflow: hidden;
-      height: 0;
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows var(--transition-slow);
+    }
+    .area-body.open {
+      grid-template-rows: 1fr;
     }
     .area-body-inner {
       overflow: hidden;
@@ -880,7 +847,11 @@
       overflow-y: auto;
       padding: 2rem 2rem 1.5rem;
       position: relative;
-      will-change: transform, opacity;
+      animation: modalIn 0.3s ease-out;
+    }
+    @keyframes modalIn {
+      from { opacity: 0; transform: translateY(30px) scale(0.97); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
     }
     .modal-close {
       position: absolute;
@@ -1125,40 +1096,11 @@
       background: var(--brand);
       color: rgba(255,255,255,0.8);
       text-align: center;
-      padding: 2.5rem 1.5rem 1.25rem;
+      padding: 1.25rem 1rem;
       font-size: 0.85rem;
       letter-spacing: 0.02em;
-      line-height: 1.6;
+      line-height: 1.5;
       margin-top: 3rem;
-    }
-    .footer-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 1.5rem;
-      max-width: 960px;
-      margin: 0 auto 2rem;
-      text-align: left;
-    }
-    .footer-col h4 {
-      font-family: var(--font-display);
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: #fff;
-      margin: 0 0 0.5rem;
-      letter-spacing: 0.04em;
-    }
-    .footer-col p { margin: 0.25rem 0; font-size: 0.82rem; }
-    .footer-col a { color: var(--yellow); }
-    .footer-col a:hover { text-decoration: underline; }
-    .footer-svg-icon { width: 16px; height: 16px; vertical-align: middle; margin-right: 2px; }
-    .footer-bottom {
-      border-top: 1px solid rgba(255,255,255,0.08);
-      padding-top: 1rem;
-      font-size: 0.78rem;
-      color: rgba(255,255,255,0.5);
-    }
-    @media (max-width: 640px) {
-      .footer-grid { grid-template-columns: 1fr 1fr; }
     }
 
     /* =============================================
@@ -1228,7 +1170,7 @@
   <header id="mainHeader">
     <div id="headerContent">
       <a href="#id__contacto" aria-label="Ir a contacto">
-        <img src="https://eestn1.com.ar/src/assets/img/logo.webp" alt="Logo E.E.S.T. Nº1" class="header-logo" width="160" height="48" decoding="async" fetchpriority="high" />
+        <img src="https://eestn1.com.ar/src/assets/img/logo.webp" alt="Logo E.E.S.T. Nº1" class="header-logo" />
       </a>
       <div class="header-info">
         <div>
@@ -1250,18 +1192,14 @@
       <ul>
         <li><a href="#top">INICIO</a></li>
         <li><a href="#id__historia">HISTORIA</a></li>
-        <li class="nav-dropdown">
-          <a href="#id__especialidades" aria-haspopup="true" aria-expanded="false">OFERTA ACADÉMICA ▾</a>
-          <ul class="nav-dropdown-menu">
-            <li><a href="#id__especialidades">ESPECIALIDADES</a></li>
-            <li><a href="#id__basico" data-nav="ciclo-basico">CICLO BÁSICO</a></li>
-            <li><a href="#id__informatica" data-nav="info-prog">INFORMÁTICA</a></li>
-            <li><a href="#id__mmo" data-nav="mmo">M.M.O.</a></li>
-          </ul>
-        </li>
+        <li><a href="#id__especialidades">ESPECIALIDADES</a></li>
+        <li><a href="#id__basico" data-nav="ciclo-basico">CICLO BÁSICO</a></li>
+        <li><a href="#id__informatica" data-nav="info-prog">INFORMÁTICA</a></li>
+        <li><a href="#id__programacion" data-nav="info-prog">PROGRAMACIÓN</a></li>
+        <li><a href="#id__mmo" data-nav="mmo">M.M.O.</a></li>
         <li><a href="#id__contacto">CONTACTO</a></li>
         <li><a href="#id__inscripcion">INSCRIPCIÓN</a></li>
-        <li><a href="https://eestn1tfeb.blogspot.com/" target="_blank" rel="noopener noreferrer">BLOG</a></li>
+        <li><a href="http://eestn1tfeb.blogspot.com/" target="_blank">BLOG</a></li>
       </ul>
     </nav>
   </header>
@@ -1279,11 +1217,11 @@
   <main>
     <!-- Hero -->
     <section id="hero" data-od-id="hero">
-      <img id="hero-bg" src="hero-fachada.jpg" alt="Fachada de la E.E.S.T. Nº1" loading="eager" fetchpriority="high" decoding="async" width="1046" height="486" />
+      <img id="hero-bg" src="hero-fachada.jpg" alt="Fachada de la E.E.S.T. Nº1" loading="eager" />
       <div id="hero-overlay"></div>
       <div id="hero-content">
         <p class="hero-sub">E.E.S.T. Nº1 · Tres de Febrero</p>
-        <h1>DONDE EL TALENTO<br />SE CONSTRUYE</h1>
+        <h1>Donde el Talento<br />se Construye</h1>
         <p class="hero-desc">Educación técnica de calidad con especialidades en Informática, Programación y Maestro Mayor de Obras. Formación integral para el futuro profesional.</p>
         <a href="#id__especialidades" class="btn-hero">Conocé nuestras especialidades →</a>
       </div>
@@ -1327,7 +1265,6 @@
           </div>
           <a href="#id__informatica" data-ingresar="info-prog" class="btn-primary">INGRESAR</a>
         </div>
-
         <div class="spec-card card">
           <div>
             <div class="spec-icon yellow">
@@ -1346,18 +1283,21 @@
     <!-- Áreas Académicas (Accordion) -->
     <section class="container section-padding-sm" data-od-id="areas-academicas">
       <h2 class="section-title">Áreas Académicas</h2>
+      <p class="text-muted section-subtitle">
+        Ampliá cada área para conocer el perfil profesional y acceder al plan de estudios correspondiente.
+      </p>
 
       <!-- Ciclo Básico -->
       <div class="area-card" data-area="ciclo-basico">
-        <div class="area-header" role="button" tabindex="0" aria-expanded="false" aria-controls="area-body-ciclo-basico">
-          <img src="ciclo-basico.jpg" alt="Ciclo Básico" class="area-thumb" loading="lazy" decoding="async" width="320" height="178" />
+        <div class="area-header" role="button" tabindex="0" aria-expanded="false">
+          <img src="ciclo-basico.jpg" alt="Ciclo Básico" class="area-thumb" loading="lazy" />
           <div class="area-header-text">
             <h3>🧱 Ciclo Básico (1° a 3° Año)</h3>
             <p>La base técnica fundacional — Talleres, robótica y alfabetización digital</p>
           </div>
-          <button class="area-toggle" aria-label="Ampliar contenido" aria-controls="area-body-ciclo-basico" type="button">▼</button>
+          <button class="area-toggle" aria-label="Ampliar contenido" type="button">▼</button>
         </div>
-        <div class="area-body" id="area-body-ciclo-basico">
+        <div class="area-body">
           <div class="area-body-inner">
             <h4>Perfil y Formación del Estudiante</h4>
             <p>El núcleo de esta formación radica en los talleres de práctica y los espacios de experimentación tecnológica. Aquí, los estudiantes transforman el conocimiento teórico en habilidades tangibles y soluciones prácticas.</p>
@@ -1376,15 +1316,15 @@
 
       <!-- Informática y Programación -->
       <div class="area-card" data-area="info-prog">
-        <div class="area-header" role="button" tabindex="0" aria-expanded="false" aria-controls="area-body-info-prog">
-          <img src="Inf-programacion.jpg" alt="Informática y Programación" class="area-thumb" loading="lazy" decoding="async" width="320" height="174" />
+        <div class="area-header" role="button" tabindex="0" aria-expanded="false">
+          <img src="Inf-programacion.jpg" alt="Informática y Programación" class="area-thumb" loading="lazy" />
           <div class="area-header-text">
             <h3>💻 Informática y Programación</h3>
             <p>Perfil profesional del egresado — Desarrollo de software, datos y pensamiento lógico</p>
           </div>
-          <button class="area-toggle" aria-label="Ampliar contenido" aria-controls="area-body-info-prog" type="button">▼</button>
+          <button class="area-toggle" aria-label="Ampliar contenido" type="button">▼</button>
         </div>
-        <div class="area-body" id="area-body-info-prog">
+        <div class="area-body">
           <div class="area-body-inner">
             <h4>Perfil Profesional del Egresado</h4>
             <ul>
@@ -1401,15 +1341,15 @@
 
       <!-- Maestro Mayor de Obras -->
       <div class="area-card" data-area="mmo">
-        <div class="area-header" role="button" tabindex="0" aria-expanded="false" aria-controls="area-body-mmo">
-          <img src="MMo.jpg" alt="Maestro Mayor de Obras" class="area-thumb" loading="lazy" decoding="async" width="320" height="174" />
+        <div class="area-header" role="button" tabindex="0" aria-expanded="false">
+          <img src="MMo.jpg" alt="Maestro Mayor de Obras" class="area-thumb" loading="lazy" />
           <div class="area-header-text">
             <h3>📐 Maestro Mayor de Obras (MMO)</h3>
             <p>Perfil profesional del egresado — Diseño, construcción y dirección de obras</p>
           </div>
-          <button class="area-toggle" aria-label="Ampliar contenido" aria-controls="area-body-mmo" type="button">▼</button>
+          <button class="area-toggle" aria-label="Ampliar contenido" type="button">▼</button>
         </div>
-        <div class="area-body" id="area-body-mmo">
+        <div class="area-body">
           <div class="area-body-inner">
             <h4>Perfil Profesional del Egresado</h4>
             <ul>
@@ -1467,7 +1407,7 @@
     <section id="id__video" class="container section-glass" data-od-id="video-institucional">
       <h2 class="section-title">Video Institucional</h2>
       <div class="video-wrapper">
-        <video controls preload="metadata" aria-label="Video promocional de la escuela">
+        <video controls preload="metadata" poster="image-13.png" aria-label="Video promocional de la escuela">
           <source src="Recorrido.mp4" type="video/mp4" />
           Tu navegador no soporta video HTML5.
         </video>
@@ -1534,219 +1474,14 @@
   </main>
 
   <footer>
-    <div class="footer-grid">
-      <div class="footer-col">
-        <h4>E.E.S.T. Nº1</h4>
-        <p>"Manuel Belgrano"</p>
-        <p>Nicaragua 3516, Santos Lugares</p>
-        <p>Buenos Aires, Argentina</p>
-      </div>
-      <div class="footer-col">
-        <h4>Contacto</h4>
-        <p>📞 4712-6983 / 4757-2546</p>
-        <p>✉️ <a href="mailto:eest1tresdefebrero@abc.gob.ar">eest1tresdefebrero@abc.gob.ar</a></p>
-      </div>
-      <div class="footer-col">
-        <h4>Enlaces</h4>
-        <p><a href="#id__inscripcion">Pre-inscripción 2026</a></p>
-        <p><a href="#id__especialidades">Oferta Académica</a></p>
-      </div>
-      <div class="footer-col">
-        <h4>Seguinos</h4>
-        <p><a href="https://www.instagram.com/tecnica1.3f/" target="_blank" rel="noopener noreferrer"><svg class="footer-svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/></svg> @tecnica1.3f</a></p>
-        <p><a href="https://eestn1tfeb.blogspot.com/" target="_blank" rel="noopener noreferrer">Blog institucional</a></p>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>&copy; 2026 E.E.S.T. Nº1 "Manuel Belgrano" — Tres de Febrero, Buenos Aires</p>
-    </div>
+    <p>&copy; 2026 Escuela de Educación Secundaria Técnica Nº1 "Manuel Belgrano" - Tres de Febrero</p>
   </footer>
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       'use strict';
 
-      // ---- GSAP context with matchMedia for reduced motion ----
-      const ctx = gsap.context(() => {
-
-        const mm = gsap.matchMedia();
-
-        // --- Reduced motion branch: kill all GSAP tweens ---
-        mm.add('(prefers-reduced-motion: reduce)', () => () => {});
-
-        // --- Full motion branch ---
-        mm.add('(prefers-reduced-motion: no-preference)', () => {
-
-          // ---- Load entrance: hero stagger ----
-          gsap.from('#hero-content .hero-sub', { y: 20, opacity: 0, duration: 0.5, ease: 'power2.out' });
-          gsap.from('#hero-content h1', { y: 30, opacity: 0, duration: 0.6, ease: 'power3.out', delay: 0.15 });
-          gsap.from('#hero-content .hero-desc', { y: 20, opacity: 0, duration: 0.5, ease: 'power2.out', delay: 0.3 });
-          gsap.from('#hero-content .btn-hero', { y: 20, opacity: 0, duration: 0.4, ease: 'power2.out', delay: 0.4 });
-
-          // ---- Accordion with GSAP height tween ----
-          document.querySelectorAll('.area-card').forEach(function (card) {
-            const head = card.querySelector('.area-header');
-            const body = card.querySelector('.area-body');
-            const inner = card.querySelector('.area-body-inner');
-            const toggle = card.querySelector('.area-toggle');
-            let isOpen = false;
-
-            function toggleBody(open) {
-              gsap.killTweensOf(body);
-              body.classList.toggle('open', open);
-              toggle.classList.toggle('open', open);
-              head.setAttribute('aria-expanded', String(open));
-
-              if (open) {
-                gsap.set(inner, { position: 'absolute', visibility: 'hidden', display: 'block', top: 0, left: 0, width: '100%' });
-                const h = inner.scrollHeight;
-                gsap.set(inner, { position: '', visibility: '', display: '' });
-
-                gsap.to(body, {
-                  height: h,
-                  duration: 0.45,
-                  ease: 'power3.inOut',
-                  onComplete: () => { gsap.set(body, { overflow: '' }); ScrollTrigger.refresh(); }
-                });
-              } else {
-                gsap.to(body, {
-                  height: 0,
-                  duration: 0.3,
-                  ease: 'power2.in',
-                  onComplete: () => { gsap.set(body, { overflow: 'hidden' }); ScrollTrigger.refresh(); }
-                });
-              }
-              isOpen = open;
-            }
-
-            head.addEventListener('click', function (e) {
-              if (e.target.closest('.show-plan-btn')) return;
-              toggleBody(!isOpen);
-            });
-            head.addEventListener('keydown', function (e) {
-              if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); head.click(); }
-            });
-            toggle.addEventListener('click', function (e) {
-              e.stopPropagation(); head.click();
-            });
-
-            // IntersectionObserver for auto-close (keep native for zero cost)
-            const accObserver = new IntersectionObserver((entries) => {
-              entries.forEach(entry => { if (!entry.isIntersecting && isOpen) toggleBody(false); });
-            }, { threshold: 0 });
-            accObserver.observe(card);
-          });
-
-          // ---- Modal entrance with GSAP ----
-          const modal = document.getElementById('planModal');
-          const modalBody = document.getElementById('modalBody');
-          const modalClose = document.getElementById('modalCloseBtn');
-          const modalBack = document.getElementById('modalBackBtn');
-          const modalBox = document.querySelector('.modal-box');
-          let previousFocus = null;
-
-          function openModal(contentId) {
-            const source = document.getElementById(contentId);
-            if (!source) return;
-            previousFocus = document.activeElement;
-            modalBody.innerHTML = source.innerHTML;
-            modal.classList.add('open');
-            document.body.style.overflow = 'hidden';
-
-            gsap.fromTo(modalBox,
-              { opacity: 0, y: 40, scale: 0.97 },
-              { opacity: 1, y: 0, scale: 1, duration: 0.4, ease: 'power3.out', clearProps: 'transform' }
-            );
-
-            setTimeout(() => {
-              const first = modal.querySelector('button, a, [tabindex]:not([tabindex="-1"])');
-              if (first) first.focus();
-              else modalClose.focus();
-            }, 50);
-          }
-
-          function closeModal() {
-            gsap.to(modalBox, {
-              opacity: 0, y: 30,
-              duration: 0.2, ease: 'power2.in',
-              onComplete: () => {
-                modal.classList.remove('open');
-                document.body.style.overflow = '';
-                if (previousFocus) previousFocus.focus();
-              }
-            });
-          }
-
-          // Focus trap
-          modal.addEventListener('keydown', function (e) {
-            if (e.key !== 'Tab') return;
-            const focusable = modal.querySelectorAll('button, a, [tabindex]:not([tabindex="-1"]), input, textarea, select');
-            if (focusable.length === 0) return;
-            const first = focusable[0], last = focusable[focusable.length - 1];
-            if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-            else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
-          });
-
-          document.querySelectorAll('.show-plan-btn').forEach(btn => {
-            btn.addEventListener('click', e => { e.stopPropagation(); openModal(btn.getAttribute('data-target')); });
-          });
-          modalClose.addEventListener('click', closeModal);
-          modalBack.addEventListener('click', closeModal);
-          modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
-
-          // ---- Parallax with gsap.quickTo + ScrollTrigger ----
-          const bandera = document.getElementById('bandera-bg');
-          if (bandera) {
-            const yTo = gsap.quickTo(bandera, '--p-y', { duration: 0.15, ease: 'none', gpu: true });
-            ScrollTrigger.create({
-              trigger: document.body,
-              start: 'top top',
-              end: 'bottom bottom',
-              onUpdate: self => yTo(self.progress * 80)
-            });
-            bandera.style.setProperty('--p-y', '0px');
-          }
-
-          // ---- Section fade-ins with ScrollTrigger ----
-          gsap.utils.toArray('section, .area-card').forEach(el => {
-            gsap.from(el, {
-              scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' },
-              y: 24, opacity: 0, duration: 0.5, ease: 'power2.out'
-            });
-          });
-
-          // ---- Spec cards stagger ----
-          gsap.from('.spec-card', {
-            scrollTrigger: { trigger: '.spec-grid', start: 'top 80%' },
-            y: 30, opacity: 0, duration: 0.45, stagger: 0.12, ease: 'power2.out'
-          });
-
-          // ---- Historia "Ver completo" fade ----
-          const historiaBtn = document.getElementById('btn-fundamentacion');
-          const historiaCompleto = document.getElementById('fundamentacion-completo');
-          if (historiaBtn && historiaCompleto) {
-            historiaBtn.addEventListener('click', function () {
-              const hidden = historiaCompleto.style.display === 'none';
-              if (hidden) {
-                gsap.set(historiaCompleto, { display: 'block', opacity: 0, y: -8 });
-                gsap.to(historiaCompleto, { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' });
-              } else {
-                gsap.to(historiaCompleto, {
-                  opacity: 0, y: -8, duration: 0.2, ease: 'power2.in',
-                  onComplete: () => gsap.set(historiaCompleto, { display: 'none' })
-                });
-              }
-              historiaBtn.textContent = hidden ? 'Ver menos' : 'Ver completo';
-            });
-          }
-
-        }); // end mm.add('no-preference')
-
-      }); // end gsap.context
-
-      // ---- ALWAYS-ON (no animation): header, nav routing, video observer, Escape key ----
-
-      // Header collapse on scroll via IntersectionObserver
+      // ---- Header IntersectionObserver ----
       const header = document.getElementById('mainHeader');
       const sentinel = document.getElementById('scroll-sentinel');
       const hamburgerBtn = document.getElementById('hamburgerBtn');
@@ -1758,28 +1493,138 @@
       }
 
       if (header && sentinel) {
-        let navLock = false;
-        const obs = new IntersectionObserver(function (entries) {
-          if (navLock) return;
-          setHeaderCompact(!entries[0].isIntersecting);
-        }, { threshold: 0 });
-        obs.observe(sentinel);
-
-        if (hamburgerBtn) {
-          hamburgerBtn.addEventListener('click', function () {
-            const isOpen = !header.classList.contains('is-compact');
-            setHeaderCompact(isOpen);
-            navLock = true; setTimeout(function () { navLock = false; }, 800);
-          });
-        }
+        const observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) { setHeaderCompact(!e.isIntersecting); });
+        }, { rootMargin: '-1px 0px 0px 0px' });
+        observer.observe(sentinel);
       }
 
-      // Nav routing: only intercept data-nav / data-ingresar links
-      // Simple #hash links use native browser scroll
+      // Hamburger toggle
+      if (hamburgerBtn && header) {
+        hamburgerBtn.addEventListener('click', function () {
+          const compact = header.classList.toggle('is-compact');
+          setHeaderCompact(compact);
+        });
+      }
+
+      // ---- Accordion (grid-rows animation) ----
+      document.querySelectorAll('.area-card').forEach(function (card) {
+        const head = card.querySelector('.area-header');
+        const body = card.querySelector('.area-body');
+        const toggle = card.querySelector('.area-toggle');
+
+        function toggleBody(open) {
+          body.classList.toggle('open', open);
+          toggle.classList.toggle('open', open);
+          head.setAttribute('aria-expanded', String(open));
+        }
+
+        head.addEventListener('click', function (e) {
+          if (e.target.closest('.show-plan-btn')) return;
+          toggleBody(!body.classList.contains('open'));
+        });
+        head.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            head.click();
+          }
+        });
+        toggle.addEventListener('click', function (e) {
+          e.stopPropagation();
+          head.click();
+        });
+      });
+
+      // ---- Accordion auto-close when scrolled away ----
+      const accordionObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) return;
+          const card = entry.target;
+          const body = card.querySelector('.area-body');
+          const toggle = card.querySelector('.area-toggle');
+          const head = card.querySelector('.area-header');
+          if (body && body.classList.contains('open')) {
+            body.classList.remove('open');
+            toggle.classList.remove('open');
+            head.setAttribute('aria-expanded', 'false');
+          }
+        });
+      }, { threshold: 0 });
+      document.querySelectorAll('.area-card').forEach(function (card) {
+        accordionObserver.observe(card);
+      });
+
+      // ---- Modal with focus trap ----
+      const modal = document.getElementById('planModal');
+      const modalBody = document.getElementById('modalBody');
+      const modalClose = document.getElementById('modalCloseBtn');
+      const modalBack = document.getElementById('modalBackBtn');
+      let previousFocus = null;
+
+      function openModal(contentId) {
+        const source = document.getElementById(contentId);
+        if (!source) return;
+        previousFocus = document.activeElement;
+        modalBody.innerHTML = source.innerHTML;
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        // Focus first focusable element
+        setTimeout(function () {
+          const first = modal.querySelector('button, a, [tabindex]:not([tabindex="-1"])');
+          if (first) first.focus();
+          else modalClose.focus();
+        }, 50);
+      }
+
+      function closeModal() {
+        modal.classList.remove('open');
+        document.body.style.overflow = '';
+        if (previousFocus) previousFocus.focus();
+      }
+
+      // Focus trap
+      modal.addEventListener('keydown', function (e) {
+        if (e.key !== 'Tab') return;
+        const focusable = modal.querySelectorAll('button, a, [tabindex]:not([tabindex="-1"]), input, textarea, select');
+        if (focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      });
+
+      document.querySelectorAll('.show-plan-btn').forEach(function (btn) {
+        btn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          openModal(btn.getAttribute('data-target'));
+        });
+      });
+      modalClose.addEventListener('click', closeModal);
+      modalBack.addEventListener('click', closeModal);
+      modal.addEventListener('click', function (e) {
+        if (e.target === modal) closeModal();
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+      });
+
+      // ---- Smooth scroll + nav routing ----
       document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
-        const area = anchor.getAttribute('data-nav') || anchor.getAttribute('data-ingresar');
-        if (area) {
-          anchor.addEventListener('click', function (e) {
+        anchor.addEventListener('click', function (e) {
+          const href = this.getAttribute('href');
+          const target = document.querySelector(href);
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth' });
+            return;
+          }
+          const area = this.getAttribute('data-nav') || this.getAttribute('data-ingresar');
+          if (area) {
             e.preventDefault();
             const card = document.querySelector('.area-card[data-area="' + area + '"]');
             if (card) {
@@ -1792,48 +1637,58 @@
                 card.querySelector('.area-header').setAttribute('aria-expanded', 'true');
               }
             }
-          });
-        }
-      });
-
-      // Nav dropdown toggle
-      document.querySelectorAll('.nav-dropdown > a').forEach(function(trigger) {
-        trigger.addEventListener('click', function(e) {
-          e.preventDefault();
-          var parent = this.parentElement;
-          var open = parent.classList.contains('open');
-          document.querySelectorAll('.nav-dropdown.open').forEach(function(d) { d.classList.remove('open'); d.querySelector('a').setAttribute('aria-expanded', 'false'); });
-          if (!open) { parent.classList.add('open'); this.setAttribute('aria-expanded', 'true'); }
+          }
         });
       });
-      document.addEventListener('click', function(e) {
-        if (!e.target.closest('.nav-dropdown')) {
-          document.querySelectorAll('.nav-dropdown.open').forEach(function(d) { d.classList.remove('open'); d.querySelector('a').setAttribute('aria-expanded', 'false'); });
-        }
-      });
 
-      // Global Escape for modal
-      const modal = document.getElementById('planModal');
-      document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape' && modal.classList.contains('open')) {
-          modal.querySelector('.modal-close')?.click();
-        }
-      });
+      // ---- Historia "Ver completo" ----
+      const historiaBtn = document.getElementById('btn-fundamentacion');
+      const historiaCompleto = document.getElementById('fundamentacion-completo');
+      const historiaWrap = document.getElementById('fundamentacion-btn-wrap');
+      if (historiaBtn && historiaCompleto) {
+        historiaBtn.addEventListener('click', function () {
+          const hidden = historiaCompleto.style.display === 'none';
+          historiaCompleto.style.display = hidden ? 'block' : 'none';
+          historiaBtn.textContent = hidden ? 'Ver menos' : 'Ver completo';
+          if (!hidden) {
+            document.getElementById('id__historia').scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      }
 
-      // Video pause when out of view
+      // ---- Video pause when out of view ----
       const videoSection = document.getElementById('id__video');
       const promoVideo = videoSection && videoSection.querySelector('video');
       if (videoSection && promoVideo) {
         const videoObserver = new IntersectionObserver(function (entries) {
           entries.forEach(function (entry) {
-            if (!entry.isIntersecting && !promoVideo.paused) promoVideo.pause();
+            if (!entry.isIntersecting && !promoVideo.paused) {
+              promoVideo.pause();
+            }
           });
         }, { threshold: 0.3 });
         videoObserver.observe(videoSection);
       }
 
-      // ---- GSAP cleanup on page hide ----
-      window.addEventListener('pagehide', () => ctx.revert());
+      // ---- Parallax background ----
+      const bandera = document.getElementById('bandera-bg');
+      if (bandera) {
+        let ticking = false;
+        function updateParallax() {
+          const scrollY = window.scrollY;
+          const maxScroll = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
+          const progress = Math.min(scrollY / maxScroll, 1);
+          const shift = progress * 80;
+          bandera.style.setProperty('--p-y', shift + 'px');
+          ticking = false;
+        }
+        window.addEventListener('scroll', function () {
+          if (!ticking) {
+            window.requestAnimationFrame(updateParallax);
+            ticking = true;
+          }
+        });
+      }
     });
   </script>
 </body>
